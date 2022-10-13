@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
     runApplication<BlackHorseTemplateApplication>(*args)
 }
 
+// 不能生效，不像下面几个 class 可以执行并打印出日志
 @Bean
 fun runner(messageSender: MessageSender): ApplicationRunner? {
     return ApplicationRunner { args: ApplicationArguments? ->
