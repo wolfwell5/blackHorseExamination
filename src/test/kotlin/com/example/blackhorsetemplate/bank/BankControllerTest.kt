@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@WebMvcTest
+@WebMvcTest(BankController::class)
 class BankControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean

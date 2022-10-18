@@ -1,4 +1,4 @@
-package com.example.blackhorsetemplate.rabbitmqintegration
+package com.example.blackhorsetemplate.rabbitmq
 
 import org.springframework.amqp.core.*
 import org.springframework.context.annotation.Bean

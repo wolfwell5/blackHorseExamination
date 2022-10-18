@@ -23,4 +23,11 @@ class BankController(var bankAccountService: BankAccountService) {
             return ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
+
+    @PostMapping("/rabbit")
+    fun postMessage(@RequestBody bankAccount: BankAccount): ResponseEntity<BankAccount> {
+        bankAccountService.postMessage(bankAccount)
+        return ResponseEntity.ok(BankAccount("nothing", "1", "2"))
+    }
+
 }

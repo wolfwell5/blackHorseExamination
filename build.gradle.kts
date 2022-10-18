@@ -1,5 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+    extra.apply {
+        // #junit5 #Mockk
+        set("mockKVersion", "1.9.3")
+        set("springMockKVersion", "1.1.2")
+    }
+}
+
+val mockKVersion: String by extra
+val springMockKVersion: String by extra
+
 plugins {
     id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.14.RELEASE"
@@ -25,19 +36,25 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2:2.0.202")
 
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
     implementation("org.springframework.boot:spring-boot-starter-amqp")
-    testImplementation ("com.rabbitmq:amqp-client:5.14.2")
-    testImplementation ("org.springframework.amqp:spring-rabbit-test:2.4.3")
-    testImplementation ("org.springframework.amqp:spring-rabbit-junit:2.4.3")
+    testImplementation("com.rabbitmq:amqp-client:5.14.2")
+    testImplementation("org.springframework.amqp:spring-rabbit-test:2.4.3")
+    testImplementation("org.springframework.amqp:spring-rabbit-junit:2.4.3")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude("org.junit.vintage", "junit-vintage-engine")
-        exclude("org.mockito", "mockito-core")
-    }
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    testImplementation("com.ninja-squad:springmockk:3.0.1")
+    testImplementation("com.ninja-squad:springmockk:${springMockKVersion}")
+    testImplementation("io.mockk:mockk:${mockKVersion}")
 
-    testImplementation ("org.awaitility:awaitility:4.2.0")
+//    test container
+    testImplementation("org.awaitility:awaitility:4.2.0")
+    testImplementation("org.testcontainers:testcontainers:1.17.5")
+    testImplementation("org.testcontainers:rabbitmq:1.17.5")
+    testImplementation("org.testcontainers:mysql:1.17.5")
+//    testImplementation ("org.testcontainers.containers.MySQLContainer:mysql:5.5")
+//    testImplementation("org.testcontainers:mysql")
+    testImplementation("org.testcontainers:junit-jupiter:1.17.5")
 
 }
 

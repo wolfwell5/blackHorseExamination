@@ -1,6 +1,5 @@
 package com.example.blackhorsetemplate.rabbitmq
 
-import com.example.blackhorsetemplate.rabbitmqintegration.MessagingConfig
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Component
 
