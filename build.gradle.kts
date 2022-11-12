@@ -56,6 +56,8 @@ dependencies {
 //    testImplementation("org.testcontainers:mysql")
     testImplementation("org.testcontainers:junit-jupiter:1.17.5")
 
+    implementation("org.postgresql:postgresql:42.4.1")
+
 }
 
 tasks.withType<KotlinCompile> {

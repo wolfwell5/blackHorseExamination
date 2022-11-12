@@ -1,0 +1,16 @@
+version: "2.3"
+services:
+  blackHorse-database:
+    ports:
+      - "${PG_DB_PORT:-9866}:5432"
+    image: "registry.app.corpintra.net/dockerhub/library/postgres:13.4"
+    environment:
+      POSTGRES_USER: "blackHorse"
+      POSTGRES_PASSWORD: "blackHorse"
+      POSTGRES_DB: "blackHorse"
+      POSTGRESQL_MAX_CONNECTIONS: 200
+    networks:
+      - otr
+networks:
+  otr:
+    external: true
