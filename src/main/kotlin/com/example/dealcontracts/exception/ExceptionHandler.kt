@@ -1,5 +1,7 @@
 package com.example.dealcontracts.exception
 
+import com.example.dealcontracts.constants.PaymentStatus
+import com.example.dealcontracts.clients.ClientResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,12 +21,6 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
     }
 
-//    @ExceptionHandler(EntityUpdateException::class)
-//    fun handleNoSuchElementException(exception: NoSuchElementException, request: WebRequest): ResponseEntity<Nothing> {
-//        logger.warn("Deal not found! - ${(request as ServletWebRequest).request.requestURI} $exception")
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-//    }
-
     override fun handleHttpMessageNotReadable(
         ex: HttpMessageNotReadableException,
         headers: HttpHeaders,
@@ -33,5 +29,27 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
     ): ResponseEntity<Any> {
         logger.warn("HttpMessageNotReadable Exception! - ${(request as ServletWebRequest).request.requestURI} $ex")
         return super.handleHttpMessageNotReadable(ex, headers, status, request)
+    }
+
+    @ExceptionHandler(BalancePaymentException::class)
+    fun handleUnionpayException(exception: BalancePaymentException): ResponseEntity<ClientResponse> {
+        logger.error("payment exeception!")
+        return ResponseEntity(
+            ClientResponse(
+                code = PaymentStatus.PAYMENT_FAILED.paymentResponseCode,
+                message = PaymentStatus.PAYMENT_EXCEPTION.text
+            ), HttpStatus.BAD_GATEWAY
+        )
+    }
+
+    @ExceptionHandler(AccountNotEnoughException::class)
+    fun handleAccountNotEnoughExceptionException(exception: AccountNotEnoughException): ResponseEntity<ClientResponse> {
+        logger.error("payment exeception!")
+        return ResponseEntity(
+            ClientResponse(
+                code = PaymentStatus.ACCOUNT_NOT_ENOUGH.paymentResponseCode,
+                message = PaymentStatus.ACCOUNT_NOT_ENOUGH.text
+            ), HttpStatus.BAD_GATEWAY
+        )
     }
 }

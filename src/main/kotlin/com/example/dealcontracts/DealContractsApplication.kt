@@ -1,6 +1,6 @@
 package com.example.dealcontracts
 
-import com.example.dealcontracts.rabbitmq.MessageSender
+import com.example.dealcontracts.clients.rabbitmq.MessageSender
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication

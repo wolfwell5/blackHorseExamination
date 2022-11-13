@@ -57,7 +57,12 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.17.5")
 
     implementation("org.postgresql:postgresql:42.4.1")
+    implementation("org.flywaydb:flyway-core:8.4.4")
+    implementation("io.github.microutils:kotlin-logging:1.7.6")
+    implementation("org.springframework.boot:spring-boot-starter-web-services")
 
+    //   #junit5 #mockk
+//    testImplementation("org.springframework.cloud: spring-cloud-contract-wiremock")
 }
 
 tasks.withType<KotlinCompile> {
