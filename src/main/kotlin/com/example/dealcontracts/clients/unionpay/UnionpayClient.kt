@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.*
+import org.springframework.web.client.HttpServerErrorException.BadGateway
+import org.springframework.web.client.HttpServerErrorException.InternalServerError
 
 @Service
 class UnionpayClient {
@@ -24,12 +26,11 @@ class UnionpayClient {
 
         return try {
             restTemplate.postForObject(unionpayUrl, HttpEntity(balancePaymentDto), ClientResponse::class)
-            //            可手动更改三方返回来协助本地开发
 //            return ClientResponse("1", "mock data", "1")
 
         } catch (exception: Exception) {
             when (exception) {
-                is RestClientResponseException, is RestClientException, is HttpClientErrorException -> {
+                is RestClientResponseException, is RestClientException, is HttpClientErrorException, is BadGateway -> {
                     return ClientResponse("-1", "error happen")
                 }
                 else -> throw exception

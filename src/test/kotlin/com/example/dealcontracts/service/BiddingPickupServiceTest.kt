@@ -2,6 +2,7 @@ package com.example.dealcontracts.service
 
 import com.example.dealcontracts.clients.ClientResponse
 import com.example.dealcontracts.clients.biddingmanage.BiddingManageClient
+import com.example.dealcontracts.clients.rabbitmq.MessageSender
 import com.example.dealcontracts.clients.rabbitmq.MessagingConfig.Companion.FANOUT_EXCHANGE_NAME
 import com.example.dealcontracts.constants.BiddingPickupStatus
 import com.example.dealcontracts.constants.PaymentStatus
@@ -50,15 +51,13 @@ class BiddingPickupServiceTest {
         //given
         every { orderRepository.findUserLastOrder("did") } returns currentOrder
         every { biddingManageClient.pickupBidding(any()) }.throws(BalancePaymentException(BiddingPickupStatus.WILL_ACCEPT_REQUEST.text))
-        every {
-            rabbitTemplate.convertAndSend(FANOUT_EXCHANGE_NAME, "", biddingPickupDto)
-        } returns Unit
+        every { MessageSender(rabbitTemplate).broadcast(any()) } returns Unit
         //then
         biddingPickupService.pickupBidding(biddingPickupDto)
 
         verify(exactly = 1) { biddingManageClient.pickupBidding(any()) }
         verify(exactly = 1) {
-            rabbitTemplate.convertAndSend(FANOUT_EXCHANGE_NAME, "", biddingPickupDto)
+            MessageSender(rabbitTemplate).broadcast(any())
         }
     }
 }

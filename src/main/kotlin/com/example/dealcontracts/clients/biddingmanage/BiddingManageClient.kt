@@ -25,7 +25,6 @@ class BiddingManageClient {
 
         return try {
             restTemplate.postForObject(biddingManageUrl, HttpEntity(biddingPickupDto), ClientResponse::class)
-//            可手动更改三方返回来协助本地开发
 //            return ClientResponse("1", "mock data", "1")
         } catch (exception: Exception) {
             when (exception) {

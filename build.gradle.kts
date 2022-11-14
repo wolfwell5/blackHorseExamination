@@ -61,8 +61,9 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.7.6")
     implementation("org.springframework.boot:spring-boot-starter-web-services")
 
-    //   #junit5 #mockk
-//    testImplementation("org.springframework.cloud: spring-cloud-contract-wiremock")
+    implementation("com.github.tomakehurst:wiremock-jre8:2.33.2")
+    implementation("org.springframework.cloud:spring-cloud-contract-wiremock:1.2.4.RELEASE")
+
 }
 
 tasks.withType<KotlinCompile> {
